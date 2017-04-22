@@ -2,48 +2,51 @@ import config from '../util/config';
 import {EventEmitter} from 'events';
 import Dispatcher from '../dispatcher/index';
 
-/*
-Card Store which listensfor actions dispatched 
-from dispacther , is responsible for making ajax service call to fetch
- cards
-*/
-class CardStore extends EventEmitter {
+class CommentStore extends EventEmitter {
  
   constructor(){
     super();
-    this.cards=[];
+    this.comments=[];
+    this.replies = {};
   }
 
-  fetchCardsFromAPI(){
-    AjaxService.get(config.getCardsURL)
-    .then((data)=>{
-      this.jobs=data;
-      this.emit('cardsFetched');
-    })
-    .catch((err)=>{
-      console.log(err);
-    });
+  getComments = () => {
+    return this.comments;
+  }
+    
+  getReplies = (commentId) => {
+      return this.replies[commentId];
+  }
+  
+  addReplies = ({commentId,replies}) => {
+      this.replies[commentId] = !this.replies[commentId]?[]:this.replies[commentId];
+      this.replies[commentId].push(replies);
+       this.emit('repliesFetched');
+  }
+  
+  addComments = (comment) => {
+      this.comments.push(comment);
+      this.emit('commentsFetched');
   }
 
-
-  getCards(){
-  	return this.jobs;
-  }
-
-  // cardStoreListener which listens for actions related to cards
-  cardStoreListener(actionObj){
+  commentStoreListener = (actionObj) => {
     switch(actionObj.actionType){
-
-            case 'FETCHCARDS' : {
-                                  this.fetchCardsFromAPI();
-                                   break;
-                                }
-
+            
+            case 'ADDCOMMENTS' : {
+                      this.addComments(actionObj.comment);
+                       break;
+                    }
+            
+            case 'ADDREPLIES':
+                {
+                    this.addReplies(actionObj.comment);
+                    break;
+                }
        }
   }
 
 }
 
-let cardStore=new CardStore();
-Dispatcher.register(cardStore.cardStoreListener.bind(cardStore));
-export default cardStore;
+let commentStore=new CommentStore();
+Dispatcher.register(commentStore.commentStoreListener);
+export default commentStore;

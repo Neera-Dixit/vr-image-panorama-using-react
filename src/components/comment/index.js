@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import PostComment from './postComment';
 import CommentList from './commentList/index';
+import commentStore from '../../stores/commentStore';
+import commentActions from '../../actions/commentActions';
 
 export default class CommentApp extends Component {
     constructor() {
@@ -10,10 +12,23 @@ export default class CommentApp extends Component {
         }
     }
 
+    componentWillMount= () => {
+        commentStore.on('commentsFetched', this.fetchCommentsFromStore);
+    }
+    
+    componentWillUnmount= () => {
+        commentStore.removeEventListener('commentsFetched', this.fetchCommentsFromStore);
+    }
+    
+    fetchCommentsFromStore = () => {
+        this.setState({comments:commentStore.getComments()});
+    }
+        
     handlePostComment = (userName,comment) => {
-        const comments= this.state.comments;
-        comments.push({userName,comment});
-        this.setState({comments});
+        commentActions.postComment({userName,comment});
+       // const comments= this.state.comments;
+       // comments.push({userName,comment});
+        //this.setState({comments});
     }
 
     render() {

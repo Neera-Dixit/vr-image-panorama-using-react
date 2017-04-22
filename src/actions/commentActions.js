@@ -2,14 +2,22 @@ import Dispatcher from '../dispatcher/index';
 
 let commentActions = {
 
-	postComments : ()=>{
+	postComment : (comment)=>{
 		Dispatcher.dispatch({
-			actionType : 'POSTCOMMENTS'
+			actionType : 'ADDCOMMENTS',
+            comment
 		});
 
-	}
+	},
     
+    postReplies : (comment)=>{
+        Dispatcher.dispatch({
+            actionType : 'ADDREPLIES',
+            comment
+        });
+
+    }
     
 }
 
-export default cardActions;
+export default commentActions;

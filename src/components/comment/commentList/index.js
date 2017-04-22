@@ -11,7 +11,7 @@ export default class ViewComments extends Component {
         
         const comments = this.props.comments.map((commentData,index)=>{
           const {userName,comment}=commentData;
-         return <Comment key={index} userName={userName} comment={comment} />;   
+         return <Comment key={index} userName={userName} comment={comment} parentKey={index}/>;   
         });
         
         return (
