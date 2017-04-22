@@ -1,0 +1,29 @@
+.comment {
+    border : 1px solid black;
+    margin-top: 10px;
+    padding: 5px 0 5px 5px;
+    position: relative;
+    width:350px;  
+    text-align: center;
+    border-radius: 10px;
+}
+
+.comment button{
+    margin-left: 5px;
+}
+.comment > div{
+    padding-top: 10px;
+}
+
+.parent.comment {
+    position: absolute;
+}
+
+textarea{
+    width: 250px;
+    height: 100px;
+}
+
+.commentLabel{
+    vertical-align: top;
+}
