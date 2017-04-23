@@ -12,7 +12,6 @@ export default class Comment extends Component {
                         commentList : [],
                         showPostComment : false
                      };
-        this.position =0;
     }
 
     componentWillMount= () => {
@@ -24,19 +23,41 @@ export default class Comment extends Component {
     }
     
     fetchRepliesFromStore = () => {
-        this.setState({commentList:commentStore.getReplies(this.props.parentKey)});
+        let replies = commentStore.getReplies(this.props.parentKey);
+        let position =0,replyToPos=0,count=0;
+        let commentList = replies && replies.map((commentData,index) => {
+           
+            let commentState = this.state.commentList;
+            
+            position = commentState[index]?(commentState[index].position):position+40;
+            
+            if(this.replyTo === commentData.replyTo){
+                count++;
+                if(count ==1){
+                     replyToPos = position;
+                }
+               
+            }
+    
+            
+            return {commentData,position}
+        });
+        
+        
+       if(count >=2){
+           commentList[commentList.length-1].position = replyToPos;
+       } 
+        this.setState({commentList});
     }
     
-    handelReplyComment = ({userName})=>{
+    handelReplyComment = ({userName,index})=>{
       this.replyTo = userName;
-      const commentList = this.state.commentList;
         //check if post comment is already opened
        if(!this.state.postCommentOpen){
             this.setState({showPostComment : true});
             this.postCommentOpen = !this.postCommentOpen;                       
         }
-                  
-      this.setState({commentList});
+
     }
     
     handlePostComment = (userName,comment) => {
@@ -48,13 +69,11 @@ export default class Comment extends Component {
     
     render() {
         
-        const {userName,comment} = this.props;
-        this.position =0;
-    
-        const commentList = this.state.commentList && this.state.commentList.map((element,index) => {
-            this.position+=20;
+        const {userName,comment,parentKey} = this.props;
 
-             return (<ViewComment style={{left: this.position}} key={index} userName={element.userName} comment={element.comment} replyTo ={element.replyTo} handelReplyComment={this.handelReplyComment}/>);                 
+        const commentList = this.state.commentList && this.state.commentList.map((element,index) => {
+            let commentData = element.commentData;
+             return (<ViewComment style={{left: element.position}} postion={element.position} key={index+1} index={index+1} userName={commentData.userName} comment={commentData.comment} replyTo ={commentData.replyTo} handelReplyComment={this.handelReplyComment}/>);                 
 
                                    
          });
@@ -62,9 +81,9 @@ export default class Comment extends Component {
         return (
             
             <div className="parent" >
-                <ViewComment userName={userName} comment={comment} handelReplyComment={this.handelReplyComment}/>
+                <ViewComment userName={userName} key={parentKey} index={parentKey} style={{left: 10}} postion={10} comment={comment} handelReplyComment={this.handelReplyComment}/>
                 {commentList}
-                {this.state.showPostComment && <PostComment style={{left: this.position+=20}} handlePostComment={this.handlePostComment} />}
+                {this.state.showPostComment && <PostComment style={{left: 20}} handlePostComment={this.handlePostComment} />}
                 <hr/>
             </div>
         )

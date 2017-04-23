@@ -29,16 +29,16 @@ export default class ViewComment extends Component {
             <div className="comment" style={this.props.style}>
                 {this.props.replyTo && <b>@{this.props.replyTo}</b>}
                 <div>
-                    <label><b>User</b> : {userName}</label>
+                    <label><b>User</b>  <div className = "nameSection">{userName}</div></label>
                 </div>
                 <div>
-                    <label><b>Comment</b> : {comment}</label>
+                    <label><b>Comment</b> <div className = "commentContentSection">{comment}</div></label>
                 </div>
-                <div><label><b>Votes</b> : {this.state.votes}</label></div>
+                <div><label><b>Votes</b> <div className = "upvoteContentSection">{this.state.votes} </div></label></div>
                 <div className="btn">
-                    <button onClick={this.handleUpvoteClick}>Upvote</button>
-                    <button onClick={this.handleDownvoteClick}>DownVote</button >
-                    <button onClick={()=>this.props.handelReplyComment(this.props)}>Reply</button>
+                    <div onClick={this.handleUpvoteClick} className = "upvoteImage"></div>
+                    <div onClick={this.handleDownvoteClick} className = "downvoteImage"></div>
+                    <button onClick={()=>{return this.props.handelReplyComment(this.props)}}>Reply</button>
                 </div>
             </div>
 

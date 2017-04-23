@@ -40,6 +40,11 @@ module.exports =
                         fallbackLoader: 'style-loader',
                         loader: 'css-loader!autoprefixer-loader'
                     })
+            },
+            {
+                test: /\.(png|jpg)$/,
+                exclude: /node_modules/,
+                loader: 'url-loader?limit=1000'
             }
         ]
         },
