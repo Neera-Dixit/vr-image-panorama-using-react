@@ -26,9 +26,6 @@ export default class CommentApp extends Component {
         
     handlePostComment = (userName,comment) => {
         commentActions.postComment({userName,comment});
-       // const comments= this.state.comments;
-       // comments.push({userName,comment});
-        //this.setState({comments});
     }
 
     render() {

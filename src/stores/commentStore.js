@@ -19,7 +19,7 @@ class CommentStore extends EventEmitter {
   }
   
   addReplies = ({commentId,replies}) => {
-      this.replies[commentId] = !this.replies[commentId]?[]:this.replies[commentId];
+      this.replies[commentId] = this.replies[commentId] || []; 
       this.replies[commentId].push(replies);
        this.emit('repliesFetched');
   }

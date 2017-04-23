@@ -27,9 +27,9 @@ export default class Comment extends Component {
         this.setState({commentList:commentStore.getReplies(this.props.parentKey)});
     }
     
-    handelReplyComment = ()=>{
+    handelReplyComment = ({userName})=>{
+      this.replyTo = userName;
       const commentList = this.state.commentList;
-
         //check if post comment is already opened
        if(!this.state.postCommentOpen){
             this.setState({showPostComment : true});
@@ -40,8 +40,9 @@ export default class Comment extends Component {
     }
     
     handlePostComment = (userName,comment) => {
+        this.setState({showPostComment : false});
         this.postCommentOpen = !this.postCommentOpen;
-        commentActions.postReplies({commentId : this.props.parentKey,replies:{userName,comment}});
+        commentActions.postReplies({commentId : this.props.parentKey,replies:{userName,comment,replyTo:this.replyTo}});
     }
     
     
@@ -53,7 +54,7 @@ export default class Comment extends Component {
         const commentList = this.state.commentList && this.state.commentList.map((element,index) => {
             this.position+=20;
 
-             return (<ViewComment style={{left: this.position  }} key={index} userName={element.userName} comment={element.comment} handelReplyComment={this.handelReplyComment}/>);                 
+             return (<ViewComment style={{left: this.position}} key={index} userName={element.userName} comment={element.comment} replyTo ={element.replyTo} handelReplyComment={this.handelReplyComment}/>);                 
 
                                    
          });
@@ -63,7 +64,8 @@ export default class Comment extends Component {
             <div className="parent" >
                 <ViewComment userName={userName} comment={comment} handelReplyComment={this.handelReplyComment}/>
                 {commentList}
-                {this.state.showPostComment && <PostComment style={{left: this.position+=20}} key={this.state.commentList.length+1} handlePostComment={this.handlePostComment} />}
+                {this.state.showPostComment && <PostComment style={{left: this.position+=20}} handlePostComment={this.handlePostComment} />}
+                <hr/>
             </div>
         )
     }

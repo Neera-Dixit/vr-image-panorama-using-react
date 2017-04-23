@@ -4,10 +4,7 @@
   "description": "Wealthy Application",
   "main": "index.js",
   "scripts": {
-    "webpack": "webpack-dev-server --progress --inline --hot",
-    "build": "webpack -p --config ./webpack.production.config.js",
-    "start": "http-server ./",
-    "test": "cd test & babel-node spec/run.js"
+    "webpack": "webpack-dev-server --progress --inline --hot"
   },
   "author": "",
   "license": "ISC",

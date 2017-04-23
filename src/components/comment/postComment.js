@@ -16,14 +16,14 @@ export default class PostComment extends Component {
         return (
             <form onSubmit={this.handlePostComment} className="comment" style={this.props.style}>
                 <div>
-                    <label>User : </label>
+                    <label><b>User</b></label>
                     <input type="text" size="20" ref={(input) => this.userName = input} required/>
                 </div>
                 <div>
-                    <label className="commentLabel">Comment : </label>
+                    <label className="commentLabel"><b>Comment</b></label>
                     <textarea ref={(input) => this.comment = input} required></textarea>
                 </div>
-                <div><button>Submit Comment</button></div>
+                <div><button id="postComment">Submit Comment</button></div>
             </form>
 
         )

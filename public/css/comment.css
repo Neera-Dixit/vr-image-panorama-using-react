@@ -4,11 +4,25 @@
     padding: 5px 0 5px 5px;
     position: relative;
     width:350px;  
-    text-align: center;
     border-radius: 10px;
 }
 
 .comment button{
+    margin-left: 5px;
+    border-radius: 10px;
+    padding: 5px;
+    outline : none;
+}
+
+#postComment{
+     margin-left: 65px;
+}
+.comment input[type="text"] {
+    margin-left: 38px;
+    width: 250px;
+}
+
+.comment textarea{
     margin-left: 5px;
 }
 .comment > div{
@@ -26,4 +40,8 @@ textarea{
 
 .commentLabel{
     vertical-align: top;
+}
+
+.btn{
+    text-align:  center;
 }
