@@ -10,6 +10,8 @@ export default class PostComment extends Component {
     handlePostComment = (e) => {
         e.preventDefault();
         this.props.handlePostComment(this.userName.value,this.comment.value);
+        this.userName.value ='';
+        this.comment.value = '';
     }
 
     render() {
