@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import CommentApp from './comment/index';
+import ImageContainer from './imageContainer';
 
-ReactDOM.render(
-    <CommentApp/>, document.getElementById('app'));
+ReactDOM.render(<ImageContainer />, document.getElementById('app'));

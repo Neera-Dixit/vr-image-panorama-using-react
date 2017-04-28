@@ -34,6 +34,14 @@ module.exports =
                     loader: 'babel-loader'
             },
                 {
+                test: /\.scss$/,
+                exclude: /node_modules/,
+                loader: extractTextPlugin.extract({
+                    fallbackLoader: 'style-loader',
+                    loader: 'css-loader!autoprefixer-loader!sass-loader'
+                })
+            },
+                {
                     test: /\.css$/,
                     exclude: /node_modules/,
                     loader: extractTextPlugin.extract({
@@ -49,6 +57,6 @@ module.exports =
         ]
         },
          resolve: {
-        extensions: ['.js', '.es6', '.jsx', '.css']
+        extensions: ['.js', '.es6', '.jsx', '.scss','.css']
     }
     };
